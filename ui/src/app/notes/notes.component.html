@@ -1,0 +1,69 @@
+<h1>CRUD Operations</h1>
+
+<hr />
+
+<h3>Get All Notes</h3>
+<button (click)="getAllNotes()">{{ notesMessage }}</button>
+<button (click)="resetNotes()">Reset Notes</button>
+<ul *ngIf="notes.length > 0">
+  <li *ngFor="let note of notes">{{ note.note_id }} | {{ note.title }}</li>
+  <!-- <pre>{{ notes | json }}</pre> -->
+</ul>
+<hr />
+
+<h3>Select a Single Note for Edit or Delete</h3>
+<input [(ngModel)]="noteId" #ctrl="ngModel" required />
+<button (click)="getNote()">Set value</button>
+
+<hr />
+
+<h3>Delete Note</h3>
+  <button (click)="deleteNote()">Delete Note</button> <br />
+  Value Set for Deletion: {{ noteForm.value.timestamp ? 'TRUE' : 'FALSE' }}
+<hr />
+
+<h3>{{ noteForm.value.timestamp ? 'Edit' : 'Add' }} Note</h3>
+<button (click)="clearForm()">Clear Form to Add Note</button>
+<form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+      <div class="input-container">
+          <i class="fas fa-thumbtack small pin" aria-hidden="true"></i>
+          <input name="title"
+              id="title"
+              type="text"
+              class="form-control"
+              placeholder="{{defaultTitle}}"
+              formControlName="title"
+              value="{{note?.title}}"
+          >
+      </div>
+  </div>
+  <div class="form-group">
+      <textarea name="content"
+          id="content"
+          cols="30"
+          rows="4"
+          class="form-control"
+          placeholder="Take a note..."
+          formControlName="content"
+          #focus
+          value="{{note?.content}}"
+      ></textarea>
+
+  </div>
+  <input type="hidden" name="cat" id="cat" formControlName="cat" value="{{note?.cat}}">
+  <input type="hidden" name="timestamp" id="timestamp" formControlName="timestamp" value="{{note?.timestamp}}">
+  <input type="hidden" name="note_id" id="note_id" formControlName="note_id" value="{{note?.note_id}}">
+  <div class="form-group flex-space">
+      <div>
+          <span class="form-validation-alert soft-alert"
+              *ngIf="noteForm.controls['content'].touched && !noteForm.controls['content'].valid"
+          >Please type in a note.</span>
+      </div>
+      <button  type="submit" class="btn btn-primary" [disabled]="!noteForm.valid || disableSubmit">
+          <i class="fas fa-edit" aria-hidden="true"></i>
+          <span>Save Note</span>
+      </button>
+  </div>
+</form>
+
