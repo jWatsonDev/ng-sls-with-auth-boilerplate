@@ -4,14 +4,13 @@ phases:
   install:
     pre_build:
       - echo Deployment started on `date`
+  build:
+    commands:
       - cd ui
       - npm install
       - npm run-script build
       - echo syncing s3
       - aws s3 sync ./dist s3://boilerplate-jdw-ui
-  build:
-    commands:
-      - echo invalidating cloudfront cache
   post_build:
     commands:
       - deployment complete
