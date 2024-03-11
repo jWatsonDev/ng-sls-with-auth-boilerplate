@@ -6,13 +6,14 @@ phases:
       - echo Deployment started on `date`
   build:
     commands:
-      - cd ui
-      - npm install
-      - npm run-script build
-      - echo syncing s3
       - aws s3 ls
-      - ls
-      - aws s3 sync ./ui/dist s3://boilerplate-jdw-ui
+      # - cd ui
+      # - npm install
+      # - npm run-script build
+      # - echo syncing s3
+      # - aws s3 ls
+      # - ls
+      # - aws s3 sync ./ui/dist s3://boilerplate-jdw-ui
   post_build:
     commands:
       - deployment complete
