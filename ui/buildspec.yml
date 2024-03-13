@@ -15,4 +15,4 @@ phases:
       - aws s3 sync ./dist/ui s3://boilerplate-jdw-ui
   post_build:
     commands:
-      - deployment complete
+      - echo Deployment completed on `date`
