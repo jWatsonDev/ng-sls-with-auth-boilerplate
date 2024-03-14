@@ -9,10 +9,15 @@ phases:
   pre_build:
     commands: 
       - echo installing npm dependencies
+      - ls 
+      - pwd
+      - cd ui
       - npm install
   build:
     commands: 
       - echo building... `date`
+      - pwd
+      - cd ui
       - sls deploy 
   post_build:
     commands: 
