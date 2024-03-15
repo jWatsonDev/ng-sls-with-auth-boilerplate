@@ -9,14 +9,11 @@ phases:
   pre_build:
     commands: 
       - echo installing npm dependencies
-      - ls 
-      - pwd
       - npm install
   build:
     commands: 
-      - echo building... `date`
-      - pwd
+      - echo serverless deploy
       - sls deploy 
   post_build:
     commands: 
-      - echo deployment complete
+      - echo Deployment completed on `date`
