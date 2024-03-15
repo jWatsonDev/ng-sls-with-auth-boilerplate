@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    pre_build:
+      - echo Deployment started on `date`
+  build:
+    commands:
+      - cd ui
+      - npm install
+      - npm run-script build
+      - echo syncing s3
+      - aws s3 sync ./dist/ui s3://boilerplate-jdw-ui
+  post_build:
+    commands:
+      - echo Deployment completed on `date`

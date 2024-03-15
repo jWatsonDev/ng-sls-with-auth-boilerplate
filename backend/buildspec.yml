@@ -3,6 +3,7 @@ version: 0.2
 phases:
   install:
     commands: 
+      - cd backend
       - echo installing serverless
       - npm install -g serverless
   pre_build:
@@ -11,8 +12,8 @@ phases:
       - npm install
   build:
     commands: 
-      - echo building... `date`
-      - sls deploy -v -s $ENV_NAME
+      - echo serverless deploy
+      - sls deploy 
   post_build:
     commands: 
-      - deployment complete
+      - echo Deployment completed on `date`
