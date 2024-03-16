@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 declare const API_ROOT: string;
 declare const STAGE: string;
@@ -10,6 +11,7 @@ declare const STAGE: string;
 })
 export class DataService {
     options;
+    apiRoot: string = environment.apiUrl;
     constructor(private httpClient: HttpClient) {}
 
     setOptions() {
@@ -87,8 +89,9 @@ export class DataService {
   }
 
     getNotes(start?): Observable<any> {
+        console.log('api', this.apiRoot)
         // let path = STAGE + '/notes?limit=8';
-        let path = 'http://localhost:3000/dev/notes?limit=5';
+        let path = `${this.apiRoot}/notes?limit=5`;
 
         if (start > 0) {
             path += '&start=' + start;
