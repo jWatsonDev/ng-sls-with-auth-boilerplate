@@ -8,7 +8,7 @@ phases:
     commands:
       - cd ui
       - npm install
-      - npm run-script build --prod
+      - npm run build -- --configuration production
       - echo syncing s3
       - aws s3 sync ./dist/ui s3://boilerplate-jdw-ui
   post_build:
