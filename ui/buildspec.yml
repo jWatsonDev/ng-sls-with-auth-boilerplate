@@ -10,7 +10,7 @@ phases:
       - npm install
       - npm run build -- --configuration production
       - echo syncing s3
-      - aws s3 sync ./dist/ui s3://boilerplate-jdw-ui
+      - aws s3 sync ./dist/ui s3://habitbjj.net
   post_build:
     commands:
       - echo Deployment completed on `date`
