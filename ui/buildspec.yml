@@ -13,6 +13,6 @@ phases:
       - aws s3 sync ./dist/ui s3://habitbjj.net
   post_build:
     commands:
-      - echo Invalidate CloudFront
+      - echo Invalidate CloudFront cache
       - aws cloudfront create-invalidation --distribution-id E96X5OVK8LLDJ --paths "/*"
       - echo Deployment completed on `date`
