@@ -1,31 +1,4 @@
-<div class="container">
-  <div class="welcome">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Welcome to the Serverless Notes App</h5>
-        <p class="card-text">Sign in with your Google Account to continue.</p>
+<h1>Login</h1>
 
-        <button
-          type="button"
-          class="btn btn-primary btn-block"
-          (click)="onSignIn()"
-        >
-          <i class="fab fa-google"></i>
-          <span class="button-text">Sign in</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="buttonDiv"></div>
-
-  <button (click)="delMeLater()">test</button>
-
- <h1>Here: {{ freddy }} </h1>
-
-  <div
-    data-client_id="882101212564-cmhdfraahqld5nrjs41br27j5h5adsbf.apps.googleusercontent.com"
-  ></div>
-  <div class="g_id_signin" data-type="standard"></div>
-</div>
-<!-- "Not a valid origin for the client: http://localhost:4200 has not been registered for client ID 882101212564-cmhdfraahqld5nrjs41br27j5h5adsbf.apps.googleusercontent.com. Please go to https://console.developers.google.com/ and register this origin for your project's client ID." -->
+<asl-google-signin-button type='standard' size='medium'>
+</asl-google-signin-button>

@@ -5,7 +5,6 @@
 const AWS = require('aws-sdk');
 AWS.config.update({ region: 'us-east-1' });
 
-const jwtDecode = require('jwt-decode');
 const util = require('./util.js');
 
 const cognitoidentity = new AWS.CognitoIdentity();
@@ -32,8 +31,8 @@ exports.handler = async (event) => {
         };
 
         data = await cognitoidentity.getCredentialsForIdentity(params).promise();
-        let decoded = jwtDecode(id_token);
-        data.user_name = decoded.name;
+        // let decoded = jwtDecode(id_token);
+        // data.user_name = decoded.name;
 
         return {
             statusCode: 200,
@@ -46,7 +45,7 @@ exports.handler = async (event) => {
             statusCode: err.statusCode ? err.statusCode : 500,
             headers: util.getResponseHeaders(),
             body: JSON.stringify({
-                error: err.name ? err.name : "Exception",
+                error: err.name ? `err.name ${err.name}` : "Exception",
                 message: err.message ? err.message : "Unknown error"
             })
         };

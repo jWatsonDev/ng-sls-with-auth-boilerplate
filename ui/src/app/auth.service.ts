@@ -1,7 +1,7 @@
-declare const google: any;
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 declare const API_ROOT: string;
 declare const STAGE: string;
@@ -10,20 +10,11 @@ declare const STAGE: string;
   providedIn: 'root'
 })
 export class AuthService {
+  apiRoot: string = environment.apiUrl;
+
   constructor(private router: Router,
     private httpClient: HttpClient,
     private _router: Router) {
-    // gapi.load('auth2', function () {
-    //     gapi.auth2.init();
-    // });
-  }
-
-  getCredentials() {
-    return localStorage.getItem('aws');
-  }
-
-  getIdToken() {
-    return localStorage.getItem('id_token');
   }
 
   /**
@@ -54,97 +45,63 @@ export class AuthService {
       }
     }
 
-    console.log('false')
-
     return false;
   }
 
-  hmmm() {
-    this._router.navigate(['']).then(() => {
-      window.location.reload();
-    });
+      /**
+     *
+     * @param id_token
+     *
+     * Set IDP id_token and aws credentials here
+     */
+      async setCredentials(id_token) {
+        try {
+            let options = {
+                headers: {
+                    Authorization: id_token
+                }
+            };
+
+            //let endpoint = API_ROOT + STAGE + '/auth';
+            let endpoint = `${this.apiRoot}/auth`
+            let credentials = await this.httpClient.get(endpoint, options).toPromise();
+
+            localStorage.setItem('id_token', id_token);
+            localStorage.setItem('aws', JSON.stringify(credentials));
+
+            this._router.navigate(['']).then(() => {
+              window.location.reload();
+            });
+
+            return;
+        } catch(err) {
+            localStorage.removeItem('id_token');
+            localStorage.removeItem('aws');
+            throw err;
+        }
+    }
+
+  getIdToken() {
+    return localStorage.getItem('id_token');
   }
 
-  // loadGoogleLogin() {
-  //   console.log('loading google')
-  //   google.accounts.id.initialize({
-  //     client_id: "882101212564-cmhdfraahqld5nrjs41br27j5h5adsbf.apps.googleusercontent.com",
-  //     callback: this.login
-  //   });
-  //   google.accounts.id.renderButton(
-  //     document.getElementById("buttonDiv"),
-  //     { type: "standard", theme: "filled_blue", size: "large", shape: "rectangular", width: "350.043", logo_alignment: "left" } // customization attributes
-  //   );
-  // }
+  getCredentials() {
+    return localStorage.getItem('aws');
+}
 
   async setLogin(token) {
     console.log(token)
     await localStorage.setItem('id_token', token);
   }
 
-  public saveToken(token) {
-    console.log('bro', token)
-    // google.accounts.id.initialize({
-    //   client_id: "882101212564-cmhdfraahqld5nrjs41br27j5h5adsbf.apps.googleusercontent.com",
-    //   callback: this.fred
-    // });
-    // google.prompt();
-    // GoogleAuth.signIn()
-    // let googleAuth = await gapi.auth2.getAuthInstance();
-    // let googleUser = await googleAuth.signIn({ scope: 'profile email' });
-    // let id_token = googleUser.getAuthResponse().id_token;
-    // await this.setCredentials(id_token);
+/**
+ *
+ * @param id_token
+ *
+ * Set IDP id_token and aws credentials here
+ */
+  // async setCredentials(idToken) {
+  //   await localStorage.setItem('id_token', idToken);
+  // }
 
-    // console.log($event)
-
-    // this.router.navigate(['']).then(() => {
-    //     window.location.reload();
-    // });
-  }
-
-  async login($event) {
-    console.log('bro')
-    // google.accounts.id.initialize({
-    //   client_id: "882101212564-cmhdfraahqld5nrjs41br27j5h5adsbf.apps.googleusercontent.com",
-    //   callback: this.fred
-    // });
-    // google.prompt();
-    // GoogleAuth.signIn()
-    // let googleAuth = await gapi.auth2.getAuthInstance();
-    // let googleUser = await googleAuth.signIn({ scope: 'profile email' });
-    // let id_token = googleUser.getAuthResponse().id_token;
-    console.log('what', $event)
-    const idToken = $event.credential;
-    // await this.setCredentials(idToken);
-
-    localStorage.setItem('id_token', idToken);
-
-    window.location.reload();
-
-
-
-
-  }
-
-    /**
-   *
-   * @param id_token
-   *
-   * Set IDP id_token and aws credentials here
-   */
-    async setCredentials(idToken) {
-      console.log('are we ev')
-
-      //To be implemented
-      await localStorage.setItem('id_token', idToken);
-    }
-
-  async logout() {
-    // var googleAuth = gapi.auth2.getAuthInstance();
-    // await googleAuth.signOut();
-
-    // localStorage.removeItem('id_token');
-    // localStorage.removeItem('aws');
-    // this.router.navigate(['login']);
-  }
 }
