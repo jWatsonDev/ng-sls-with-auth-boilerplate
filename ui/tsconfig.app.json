@@ -6,6 +6,7 @@
     "types": []
   },
   "files": [
+    "src/aws-pollyfill-like-file.ts",
     "src/main.ts",
     "src/polyfills.ts"
   ],

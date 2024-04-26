@@ -9,14 +9,18 @@ custom:
   allowedHeaders:
     - Accept
     - Content-Type
-    - Content-Length
     - Authorization
     - X-Amz-Date
     - X-Api-Key
     - X-Amz-Security-Token
     - X-Amz-User-Agent
+    - accessKeyId
+    - secretaccesskey
+    - sessionToken
     - app_user_id
     - app_user_name
+    - accessKey
+    - secretKey
 
 provider:
   name: aws
@@ -66,6 +70,7 @@ functions:
       - http:
           path: note
           method: patch
+          authorizer: aws_iam
           cors:
             origin: '*'
             headers: ${self:custom.allowedHeaders}

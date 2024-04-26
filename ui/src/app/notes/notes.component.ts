@@ -46,10 +46,8 @@ export class NotesComponent implements OnInit {
 
   deleteNote() {
     const noteTimestamp = this.noteForm.get('timestamp').value;
-    console.log('delete', noteTimestamp)
     this._dataService.deleteNote(noteTimestamp).subscribe(
       res => {
-        console.log(res);
         this.noteForm.reset();
         this.noteId = null;
       }, (err) => {

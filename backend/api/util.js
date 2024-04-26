@@ -2,7 +2,7 @@ const getUserId = (headers) => {
   return headers.app_user_id;
 }
 
-const getUserName = (headers) => {
+const getUsername = (headers) => {
   return headers.app_user_name;
 }
 
@@ -18,7 +18,7 @@ const getResponseHeaders = () => {
 
 module.exports = {
   getUserId,
-  getUserName,
+  getUsername,
   getIdToken,
   getResponseHeaders
 }

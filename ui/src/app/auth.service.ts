@@ -26,14 +26,12 @@ export class AuthService {
   async isLoggedIn() {
     let id_token = this.getIdToken();
 
-    console.log('id token', id_token)
-
     if (id_token) {
 
       let endpoint = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + id_token;
       try {
         var loggedInResponse = await this.httpClient.get(endpoint).toPromise();
-        console.log('l', loggedInResponse['email'])
+        localStorage.setItem('user_name', loggedInResponse['name']);
 
         if (loggedInResponse && loggedInResponse['email']) {
           return true;
@@ -81,6 +79,10 @@ export class AuthService {
         }
     }
 
+    getName() {
+      return localStorage.getItem('user_name');
+    }
+
   getIdToken() {
     return localStorage.getItem('id_token');
   }
@@ -90,18 +92,7 @@ export class AuthService {
 }
 
   async setLogin(token) {
-    console.log(token)
     await localStorage.setItem('id_token', token);
   }
-
-/**
- *
- * @param id_token
- *
- * Set IDP id_token and aws credentials here
- */
-  // async setCredentials(idToken) {
-  //   await localStorage.setItem('id_token', idToken);
-  // }
 
 }
