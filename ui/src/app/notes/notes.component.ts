@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-notes',
@@ -9,8 +9,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class NotesComponent implements OnInit {
   noteId: any;
-  noteForm: FormGroup;
-  myForm: FormGroup;
+  noteForm: UntypedFormGroup;
+  myForm: UntypedFormGroup;
   disableSubmit: boolean;
   note: any;
   notes: any = [];
@@ -21,7 +21,7 @@ export class NotesComponent implements OnInit {
   allNotesLoaded: boolean = false;
 
   constructor(private _dataService: DataService,
-    private _formBuilder: FormBuilder) { }
+    private _formBuilder: UntypedFormBuilder) { }
 
   ngOnInit(): void {
     this.defaultTitle = 'Title';
@@ -46,10 +46,8 @@ export class NotesComponent implements OnInit {
 
   deleteNote() {
     const noteTimestamp = this.noteForm.get('timestamp').value;
-    console.log('delete', noteTimestamp)
     this._dataService.deleteNote(noteTimestamp).subscribe(
       res => {
-        console.log(res);
         this.noteForm.reset();
         this.noteId = null;
       }, (err) => {

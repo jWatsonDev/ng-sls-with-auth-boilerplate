@@ -8,9 +8,11 @@ phases:
     commands:
       - cd ui
       - npm install
-      - npm run-script build
+      - npm run build -- --configuration production
       - echo syncing s3
-      - aws s3 sync ./dist/ui s3://boilerplate-jdw-ui
+      - aws s3 sync ./dist/ui s3://habitbjj.net
   post_build:
     commands:
+      - echo Invalidate CloudFront cache
+      - aws cloudfront create-invalidation --distribution-id E96X5OVK8LLDJ --paths "/*"
       - echo Deployment completed on `date`
